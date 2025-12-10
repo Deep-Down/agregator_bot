@@ -37,8 +37,30 @@
 
 ## ⚙️ Гайд по Запуску
 
-### 1. Клонирование Репозитория
-
-```bash
-git clone [https://github.com/YourUsername/job_aggregator_bot.git](https://github.com/YourUsername/job_aggregator_bot.git)
+# 1. Клонирование Репозитория
+git clone https://github.com/YourUsername/job_aggregator_bot.git
 cd job_aggregator_bot
+
+# 2. Создание Виртуального Окружения
+# Для Linux/macOS
+python3 -m venv venv
+source venv/bin/activate
+
+# Для Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# 3. Установка Зависимостей
+pip install -r requirements.txt
+
+# 4. Настройка Файла .env
+# Создайте файл .env в корневой директории
+# и добавьте в него следующие переменные:
+
+# .env файл
+# BOT_TOKEN="ВАШ_ТОКЕН_БОТА_ИЗ_BOTFATHER"
+# DB_URL="sqlite+aiosqlite:///db.sqlite3"
+
+# 5. Запуск Бота
+python main.py
+# После запуска в консоли должно появиться: Бот запущен!
