@@ -1,4 +1,4 @@
-# # Стало:
+# # надо убрать (пока не придумала):
 # from .common import router as common_router
 # from .search import router as search_router
 
