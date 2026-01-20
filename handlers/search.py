@@ -2,7 +2,6 @@ from aiogram import Router, F, types
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import ReplyKeyboardRemove
-# 👇 ДОБАВЬ ЭТУ СТРОКУ СЮДА
 from aiogram.utils.keyboard import InlineKeyboardBuilder 
 
 from services.hh_api import HHService
