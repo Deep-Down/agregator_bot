@@ -21,7 +21,6 @@ async def add_favorite(tg_id: int, name: str, url: str, salary: str):
     async with async_session() as session:
         user = await session.scalar(select(User).where(User.tg_id == tg_id))
         if user:
-            # Проверка на дубликаты пропущена для краткости, можно добавить
             session.add(Favorite(user_id=user.id, vacancy_name=name, vacancy_url=url, salary=salary))
             await session.commit()
 
