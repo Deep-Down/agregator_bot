@@ -12,9 +12,9 @@ class HHService:
         """
         params = {
             "text": text,
-            "area": 113,  # Поиск по России, но фильтр по городу будет в тексте
+            "area": 113,  
             "page": page,
-            "per_page": 1, # Берем по 1 шт, чтобы удобно листать в чате
+            "per_page": 1,
             "currency": "RUR"
         }
         
