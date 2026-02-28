@@ -15,9 +15,8 @@ def items_kb(items: list[str], prefix: str):
     """
     builder = InlineKeyboardBuilder()
     for item in items:
-        # callback_data не может быть очень длинным, поэтому обрезаем если что
         builder.button(text=item, callback_data=f"{prefix}_{item[:20]}")
-    builder.adjust(2) # Делаем по 2 кнопки в ряд
+    builder.adjust(2) 
     return builder.as_markup()
 
 def pagination_kb(url: str, page: int, total_pages: int, query: str):
@@ -27,7 +26,7 @@ def pagination_kb(url: str, page: int, total_pages: int, query: str):
     
     buttons = []
     if page > 0:
-        buttons.append(InlineKeyboardButton(text="⬅️", callback_data=f"page_{page-1}")) # query храним в FSM, тут упростим
+        buttons.append(InlineKeyboardButton(text="⬅️", callback_data=f"page_{page-1}")) # FSM
     
     buttons.append(InlineKeyboardButton(text=f"Стр. {page+1}/{total_pages}", callback_data="noop"))
     
