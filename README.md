@@ -1,11 +1,11 @@
-# 🚀 Job Aggregator Bot | Агрегатор IT-Вакансий (HeadHunter)
+# Job Aggregator Bot | Агрегатор IT-Вакансий (HeadHunter)
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
 ![aiogram](https://img.shields.io/badge/aiogram-3.x-green?style=for-the-badge&logo=telegram)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-yellowgreen?style=for-the-badge&logo=sqlite)
 ![HH API](https://img.shields.io/badge/HH.ru-API-orange?style=for-the-badge)
 
-## 🌟 Описание Проекта
+## Описание Проекта
 
 **Job Aggregator Bot** — это асинхронный Telegram-бот, разработанный для упрощенного поиска и мониторинга IT-вакансий с крупнейшей российской платформы HeadHunter (HH.ru).
 
@@ -19,7 +19,7 @@
 * ⭐ **Избранное (ORM):** Сохранение лучших предложений в локальную базу данных (`SQLite`).
 * ➡️ **Пагинация:** Удобное перелистывание результатов поиска по одной вакансии.
 
-## 📐 Архитектура Проекта
+## Архитектура Проекта
 
 Проект построен на принципах **модульной и трехслойной архитектуры**, что обеспечивает его чистоту, тестируемость и простоту масштабирования.
 
@@ -35,7 +35,7 @@
 
 ---
 
-## ⚙️ Гайд по Запуску
+## Гайд по Запуску
 
 ### 1. Клонирование Репозитория
 ```bash
