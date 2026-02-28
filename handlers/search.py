@@ -26,12 +26,12 @@ SALARY_RANGES = {
     "от 300.000 ₽": 300000
 }
 
-# === МАШИНА СОСТОЯНИЙ (FSM) ===
+# FSM
 class SearchFSM(StatesGroup):
-    choosing_role = State()   # Шаг 1: Выбор профессии
-    choosing_salary = State() # Шаг 2: Выбор зарплаты
-    choosing_city = State()   # Шаг 3: Ввод города
-    viewing_results = State() # Шаг 4: Просмотр (пагинация)
+    choosing_role = State()   
+    choosing_salary = State() 
+    choosing_city = State()   
+    viewing_results = State() 
 
 # 1. Запуск поиска
 @router.callback_query(F.data == "start_search")
@@ -50,7 +50,6 @@ async def role_chosen(callback: types.CallbackQuery, state: FSMContext):
     role = callback.data.split("_")[1]
     await state.update_data(role=role)
     
-    # Генерируем список зарплат
     salary_keys = list(SALARY_RANGES.keys())
     await callback.message.edit_text(
         f"Выбрано: **{role}**.\n\n💰 **Укажите желаемую зарплату:**",
@@ -67,8 +66,6 @@ async def salary_chosen(callback: types.CallbackQuery, state: FSMContext):
     
     await state.update_data(salary=salary_value)
     
-    # Удаляем инлайн-кнопки предыдущего шага и отправляем новое сообщение
-    # т.к. для ввода текста нужна Reply клавиатура (или просто текст)
     await callback.message.delete()
     await callback.message.answer(
         "🏙️ **Введите город поиска** (например: Москва, Казань).\n"
@@ -86,13 +83,11 @@ async def city_chosen(message: types.Message, state: FSMContext):
     
     await state.update_data(city=city)
     
-    # Убираем клавиатуру с кнопкой "Пропустить"
     loading_msg = await message.answer("⏳ Ищу лучшие вакансии...", reply_markup=ReplyKeyboardRemove())
     
-    # Запускаем поиск (страница 0)
     await show_vacancy_page(message, state, page=0, is_new=True)
 
-# === ЛОГИКА ОТОБРАЖЕНИЯ И ПАГИНАЦИИ ===
+# ЛОГИКА ОТОБРАЖЕНИЯ
 
 @router.callback_query(F.data.startswith("page_"))
 async def process_pagination(callback: types.CallbackQuery, state: FSMContext):
@@ -110,10 +105,8 @@ async def show_vacancy_page(message_obj, state: FSMContext, page: int, is_new: b
     salary = data.get("salary")
     city = data.get("city")
     
-    # Формируем поисковую строку: "Python Developer Москва"
     query_text = f"{role} {city}".strip()
     
-    # Запрос к API
     hh_data = await HHService.search_vacancies(query_text, salary=salary, page=page)
     
     if not hh_data or not hh_data['items']:
@@ -143,7 +136,6 @@ async def show_vacancy_page(message_obj, state: FSMContext, page: int, is_new: b
         f"📝 **Требования:**\n_{snippet}_\n"
     )
     
-    # Сохраняем текущую вакансию в состояние, чтобы работала кнопка "В избранное"
     await state.update_data(current_vacancy={
         "name": vac_name,
         "url": vac_url,
@@ -157,7 +149,7 @@ async def show_vacancy_page(message_obj, state: FSMContext, page: int, is_new: b
     else:
         await message_obj.edit_text(text_response, reply_markup=kb, parse_mode="Markdown")
 
-# === ОБРАБОТКА ИЗБРАННОГО ===
+# ОБРАБОТКА ИЗБРАННОГО
 
 @router.callback_query(F.data == "save_vacancy")
 async def save_to_favorites(callback: types.CallbackQuery, state: FSMContext):
@@ -186,7 +178,6 @@ async def show_favorites_handler(callback: types.CallbackQuery):
     for i, f in enumerate(favs, 1):
         text += f"{i}. [{f.vacancy_name}]({f.vacancy_url})\n💰 {f.salary}\n\n"
     
-    # Кнопка "Назад"
     builder = InlineKeyboardBuilder()
     builder.button(text="🔙 Назад в меню", callback_data="back_to_menu")
     
